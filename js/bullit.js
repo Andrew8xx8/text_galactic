@@ -51,20 +51,15 @@ TextGalactic.Bullit = atom.Class(
 		return this.scene.resources.rectangle.clone().grow( -this.shape.radius*2 );
 	},
 
-	checkCollision: function () {
-		if (this.options.player.getCollisionRectangle(this.shape.radius).hasPoint(this.shape)) {
-			this.options.player.hit();
-			this.destroy();
-		}
-	},
-
 	onUpdate: function (time) {
 		var moveSpeed = (this.moveSpeed * time).toSeconds().round();
+
 		if (this.direction == 'up') {
 			move(this, 0, -moveSpeed);
+			this.options.bullits.checkEnemyCollision(this);
 		} else {
 			move(this, 0, moveSpeed);
-			this.checkCollision();
+			this.options.bullits.checkPlayerCollision(this);
 		}
 		// Deestroy bullit if it's the canvas
 		if (

@@ -84,20 +84,8 @@ TextGalactic.Enemy = atom.Class(
 		this.dy = getRandomArbitary(0.8, 1.2);
 	},
 
-	get strokeRectangle () {
-		var shape = this.shape.clone();
-		var shift = new Point(.5, .5);
-		shape.from.move(shift);
-		shape.to.move(shift, true);
-		return shape;
-	},
-
-	getCollisionRectangle: function (radius) {
-		if (!this.collisionRectangle) {
-			this.collisionRectangle = this.shape.clone().grow(radius*2);
-		}
-		
-		return this.collisionRectangle;
+	getCollisionRectangle: function () {
+		return this.shape;
 	},
 
 	rate: 0,
@@ -110,10 +98,20 @@ TextGalactic.Enemy = atom.Class(
 
 	speed: TextGalactic.Settings.speed - 50	,
 
+	hit: function() {
+		this.healf = this.healf - 100;
+		this.redraw();
+
+		if (this.healf < 0) {
+			return null;
+		}
+
+		return this;
+	},
+
 	normalize_d: function () {
 		if (this.shape.from.y > this.scene.resources.rectangle.to.y) {
-			this.destroy();
-			this.options.enemies.create();
+			this.kill();
 		}
 
 		if (this.shape.to.x > this.scene.resources.rectangle.to.x || this.shape.from.x < 0) {
@@ -153,10 +151,14 @@ TextGalactic.Enemy = atom.Class(
 		var healfq = Math.round(this.healf/this.enemy.healf * 255);
 		ctx.fillStyle = "rgb(" + (healfq) + ", " + (healfq) + "," + (healfq) + ")";
 
-//		ctx.fillStyle = "#eee";
 		ctx.font = "normal normal " + TextGalactic.Settings.font_size + "px courier";
     	ctx.fillText(this.enemy.text, this.shape.from.x, this.shape.to.y);
 
 		return this.parent();
+	},
+
+	kill: function () {
+		this.destroy();
+		this.options.enemies._destroy(this);
 	}
 });

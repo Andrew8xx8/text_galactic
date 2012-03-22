@@ -46,20 +46,18 @@ TextGalactic.Enemies = atom.Class({
 	},
 
 	find: function (point) {
-		if (!this.limit.hasPoint(point)) return null;
+		for (i = 0; i < this.storage.length; i++) {
+			var shape = this.storage[i].shape;
+			if (shape.hasPoint(point)) {
+				if (this.storage[i].hit() == null) {
+					this.storage.splice(i, 1);
+					this.create();
+				}
 
-		var size   = this.options;
-		var xIndex = (point.x / (size.width  + size.padding)).floor();
-		var yIndex = (point.y / (size.height + size.padding)).floor();
-		var shift  = [-1, 0, 1];
-
-		for (var x = shift.length; x--;) for (var y = shift.length; y--;) {
-			var row  = this.index[yIndex+shift[y]];
-			var cell = row && row[xIndex+shift[x]];
-			if (cell && cell.getCollisionRectangle(this.radius).hasPoint(point)) {
-				return cell;
+				return i;
 			}
 		}
+
 		return null;
 	}
 });
