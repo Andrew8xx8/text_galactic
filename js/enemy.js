@@ -2,40 +2,51 @@ TextGalactic.Enemis = {
 	0: {
 		text: "W",
 		healf: 100,
-		speed: 100,
-		//bullitType: TextGalactic.BullitTypes['simple'],	
+		speed: 150,
 	},
 	1: {
 		text: "T",
-		healf: 150
+		healf: 150,
+		speed: 140,
 	},
 	2: {
 		text: "Y",
-		healf: 200
+		healf: 200,
+		speed: 130,
+		bullitType: TextGalactic.BullitTypes['big'],	
 	},
 	3: {
 		text: "U",
-		healf: 250
+		healf: 250,
+		speed: 120,
 	},
 	4: {
 		text: "I",
-		healf: 300
+		healf: 300,
+		speed: 110,
+		bullitType: TextGalactic.BullitTypes['lazer'],	
 	},
 	5: {
 		text: "H",
-		healf: 350
+		healf: 350,
+		speed: 100,
 	},
 	6: {
 		text: "X",
-		healf: 360
+		healf: 360,
+		speed: 90,
+		bullitType: TextGalactic.BullitTypes['simple'],	
 	},
 	7: {
 		text: "V",
-		healf: 370
+		healf: 370,
+		speed: 70,
 	},
 	8: {
 		text: "M",
-		healf: 380
+		healf: 380,
+		speed: 50,
+		bullitType: TextGalactic.BullitTypes['simple'],	
 	}
 }
 
