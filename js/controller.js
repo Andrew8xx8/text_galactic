@@ -17,18 +17,31 @@ TextGalactic.Controller = atom.Class(
 		
 		this.player = this.createPlayer(new Point( 50, 430 ));
 
-		this.enemies = this.createEnemies();
+		this.enemies = new TextGalactic.Enemies(this.activeScene, this);
+
+		this.bullits = new TextGalactic.Bullits(this.activeScene, this);
+
+		this.createEnemies()
+	},
+
+	getBullits: function() {
+		return this.bullits;
+	},
+
+	getPlayer: function() {
+		return this.player;
+	},
+
+	getEnemies: function() {
+		return this.enemies;
 	},
 
 	createEnemies: function () {
-		var x, y, cells = new TextGalactic.Enemies(this.activeScene, {
-			player: this.player
-		});
-		for (i = 0; i < 6; i++) {
-			cells.create();
-		}
-
-		return cells;
+		this.getEnemies().create();
+		this.getEnemies().create();
+		this.getEnemies().create();
+		this.getEnemies().create();
+		this.getEnemies().create();
 	},
 
 	drawBackground: function (ctx) {
@@ -47,7 +60,8 @@ TextGalactic.Controller = atom.Class(
 			shape: new Rectangle({
 					from: center.clone().move( [-player.width/2, -player.height/2] ),
 					size: [player.width, player.height]
-				})
+				}),
+			controller: this		
 		});
 	}
 });

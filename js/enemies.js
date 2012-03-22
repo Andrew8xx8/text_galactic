@@ -1,8 +1,23 @@
 TextGalactic.Enemies = atom.Class({
 
-	initialize: function (scene, options) {
-		this.options = options;
-		this.scene  = scene;
+	Extends: TextGalactic.Collection,
+
+	initialize: function (scene, controller) {
+		this.parent(scene, controller);
+		this.storage = new Array();
+	},
+
+	getCount: function() {
+		return this.storage.length;
+	},
+
+	_destroy: function(object) {
+		for (i = 0; i < this.storage.length; i++) {
+			if (this.storage[i] == object) {
+				this.storage.splice(i, 1);
+				this.create();
+			}
+		}
 	},
 
 	create: function () {
@@ -14,10 +29,12 @@ TextGalactic.Enemies = atom.Class({
 					),
 					size: [TextGalactic.Settings.font_stretch, TextGalactic.Settings.font_size]
 				}),
-			player: this.options.player,
+			controller: this.controller,
 			enemyType: getRandomInt(0, 8),
 			enemies: this
 		});
+
+		enemy.index = this.storage.push(enemy);
 
 		return enemy;
 	},

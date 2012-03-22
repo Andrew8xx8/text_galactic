@@ -93,14 +93,12 @@ TextGalactic.Player = atom.Class(
 		move(this, dx, dy);
 
 		if (this.rate > this.bullitType.rate) {
-			var bullit = new TextGalactic.Bullit( this.scene, {
-				shape: new Circle(new Point(this.shape.from.x, this.shape.from.y), TextGalactic.Settings.font_size),
-			});
+			this.options.controller.getBullits().create(
+				new Point(this.shape.from.x, this.shape.from.y),
+				this.bullitType,
+				'up'
+			);
 
-			bullit.type = this.bullitType;
-			bullit.direction = 'up';
-			bullit.owner = this;
-			
 			this.rate = 0;
 		}
 

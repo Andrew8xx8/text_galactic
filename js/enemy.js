@@ -81,7 +81,7 @@ TextGalactic.Enemy = atom.Class(
 		this.speed = this.enemy.speed;
 		this.healf = this.enemy.healf;
 		this.dx = (getRandomInt(0, 1) == 0) ? 1: -1;
-		this.dy = (getRandomInt(0, 1) == 0) ? 1: -1;
+		this.dy = getRandomArbitary(0.8, 1.2);
 	},
 
 	get strokeRectangle () {
@@ -135,14 +135,11 @@ TextGalactic.Enemy = atom.Class(
 		// make shoot
 		if (this.enemy.bullitType !== undefined) {
 			if (this.rate > this.enemy.bullitType.rate * 4) {
-				var bullit = new TextGalactic.Bullit( this.scene, {
-					shape: new Circle(new Point(this.shape.from.x, this.shape.to.y), TextGalactic.Settings.font_size),
-					player: this.options.player 
-				});
-	
-				bullit.type = this.enemy.bullitType;
-				bullit.direction = 'down';
-				bullit.owner = this;
+				this.options.controller.getBullits().create(
+					new Point(this.shape.from.x, this.shape.to.y),
+					this.enemy.bullitType,
+					'down'
+				);
 
 				this.rate = 0;
 			}
