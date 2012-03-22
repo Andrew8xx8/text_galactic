@@ -47,12 +47,20 @@ TextGalactic.Player = atom.Class(
 		return this;
 	},
 
-	normalize_x: function (x) {
-		return x;
+	normalize_dx: function (dx) {
+		if (dx + this.shape.to.x > this.scene.resources.rectangle.to.x || dx + this.shape.from.x < 0) {
+			dx = 0;
+		}
+
+		return dx;
 	},
 
-	normalize_y: function (y) {
-		return y;
+	normalize_dy: function (dy) {
+		if (dy + this.shape.to.y > this.scene.resources.rectangle.to.y || dy + this.shape.from.y < 0) {
+			dy = 0;
+		}
+
+		return dy;
 	},
 	
 	onUpdate: function (time) {
@@ -61,25 +69,25 @@ TextGalactic.Player = atom.Class(
 		var dx = 0; var dy = 0;
 
 		if (keys.keyState('aleft') && keys.keyState('aup')) {
-			dx = this.normalize_x(-moveSpeed); 
-			dy = this.normalize_y(-moveSpeed);
+			dx = this.normalize_dx(-moveSpeed); 
+			dy = this.normalize_dy(-moveSpeed);
 		} else if (keys.keyState('aleft') && keys.keyState('adown')) {
-			dx = this.normalize_x(-moveSpeed); 
-			dy = this.normalize_y(moveSpeed);
+			dx = this.normalize_dx(-moveSpeed); 
+			dy = this.normalize_dy(moveSpeed);
 		} else if (keys.keyState('aright') && keys.keyState('aup')) {
-			dx = this.normalize_x(moveSpeed); 
-			dy = this.normalize_y(-moveSpeed);
+			dx = this.normalize_dx(moveSpeed); 
+			dy = this.normalize_dy(-moveSpeed);
 		} else if (keys.keyState('aright') && keys.keyState('adown')) {
-			dx = this.normalize_x(moveSpeed);
-			dy = this.normalize_y(moveSpeed);
+			dx = this.normalize_dx(moveSpeed);
+			dy = this.normalize_dy(moveSpeed);
 		} if (keys.keyState('aleft')) {
-			dx = this.normalize_x(-moveSpeed); 
+			dx = this.normalize_dx(-moveSpeed); 
 		} else if (keys.keyState('aright')) {
-			dx = this.normalize_x(moveSpeed); 
+			dx = this.normalize_dx(moveSpeed); 
 		} else if (keys.keyState('aup')) {
-			dy = this.normalize_y(-moveSpeed); 
+			dy = this.normalize_dy(-moveSpeed); 
 		} else if (keys.keyState('adown')) {
-			dy = this.normalize_y(moveSpeed);
+			dy = this.normalize_dy(moveSpeed);
 		}
 
 		move(this, dx, dy);
