@@ -37,11 +37,9 @@ TextGalactic.Bullit = atom.Class(
 
 	type: TextGalactic.BullitTypes['simple'],
 
-	owner: null,
-
 	/** @constructs */
 	initialize: function (scene, options) {
-		this.parent( scene, options );
+		this.parent(scene, options);
 		this.moveSpeed = (this.type.speed);
 		this.type = options.type;
 		this.direction = options.direction;
