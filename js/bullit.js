@@ -73,6 +73,11 @@ TextGalactic.Bullit = atom.Class(
 		}
 	},
 
+	explode: function (){
+		this.destroy;
+		this.options.bullits._destroy(this);
+	},
+
 	renderTo: function (ctx) {
 		//ctx.fill( this.shape);
 

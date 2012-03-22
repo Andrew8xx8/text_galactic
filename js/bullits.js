@@ -6,6 +6,15 @@ TextGalactic.Bullits = atom.Class({
 		this.parent(scene, controller);
 		this.storage = new Array();
 	},
+	
+	_destroy: function(object) {
+		for (i = 0; i < this.storage.length; i++) {
+			if (this.storage[i] == object) {
+				this.storage.splice(i, 1);
+				this.create();
+			}
+		}
+	},
 
 	create: function (fromPoint, bullitType, direction) {
 		var bullit = this.storage.push(new TextGalactic.Bullit(this.scene, {
