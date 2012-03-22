@@ -11,7 +11,6 @@ TextGalactic.Bullits = atom.Class({
 		for (i = 0; i < this.storage.length; i++) {
 			if (this.storage[i] == object) {
 				this.storage.splice(i, 1);
-				this.create();
 			}
 		}
 	},
