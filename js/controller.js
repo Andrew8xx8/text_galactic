@@ -24,9 +24,10 @@ TextGalactic.Controller = atom.Class(
 		var x, y, cells = new TextGalactic.Enemies(this.activeScene, {
 			player: this.player
 		});
-		for (x = 2; x < 5; x++) for (y = 4; y < 6; y++) {
-			if (y !=  9 && y != 15 && y != 21) cells.create( x* 30, y* 30 );
+		for (i = 0; i < 6; i++) {
+			cells.create();
 		}
+
 		return cells;
 	},
 

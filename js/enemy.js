@@ -66,7 +66,11 @@ TextGalactic.Enemy = atom.Class(
 	initialize: function (scene, options) {
 		this.parent( scene, options );
 		this.addEvent( 'moveDrag', this.redraw );
-		this.enemy = TextGalactic.Enemis[this.enemyType];
+		this.enemy = TextGalactic.Enemis[options.enemyType];
+		this.speed = this.enemy.speed;
+		this.healf = this.enemy.healf;
+		this.dx = (getRandomInt(0, 1) == 0) ? 1: -1;
+		this.dy = (getRandomInt(0, 1) == 0) ? 1: -1;
 	},
 
 	get strokeRectangle () {
@@ -81,19 +85,41 @@ TextGalactic.Enemy = atom.Class(
 		if (!this.collisionRectangle) {
 			this.collisionRectangle = this.shape.clone().grow(radius*2);
 		}
+		
 		return this.collisionRectangle;
 	},
 
 	rate: 0,
+	healf: 0,
+
+	dx: 1,
+	dy: -1,
 
 	enemyType: 0,
 
 	speed: TextGalactic.Settings.speed - 50	,
 
-	onUpdate: function (time) {
-		//var moveSpeed = (enemy.speed * time).toSeconds().round();
+	normalize_d: function () {
+		if (this.shape.from.y > this.scene.resources.rectangle.to.y) {
+			this.destroy();
+			this.options.enemies.create();
+		}
 
-		//this.vmove( +moveSpeed );
+		if (this.shape.to.x > this.scene.resources.rectangle.to.x || this.shape.from.x < 0) {
+			this.dx = -this.dx;
+		}
+		
+		if (this.shape.from.y < -TextGalactic.Settings.font_size * 2) {
+			this.dy = -this.dy;
+		}
+	},
+
+	onUpdate: function (time) {
+		var moveSpeed = (this.speed * time).toSeconds().round();
+
+		move(this, this.dx * moveSpeed, this.dy * moveSpeed);
+
+		this.normalize_d();
 
 		// make shoot
 		if (this.enemy.bullitType !== undefined) {

@@ -5,14 +5,18 @@ TextGalactic.Enemies = atom.Class({
 		this.scene  = scene;
 	},
 
-	create: function (xIndex, yIndex) {
-		console.log(this.options);
+	create: function () {
 		var enemy = new TextGalactic.Enemy(this.scene, {
 			shape: new Rectangle({
-					from: new Point( xIndex, yIndex ),
+					from: new Point( 
+						getRandomInt(0, this.scene.resources.rectangle.to.x - TextGalactic.Settings.font_size ), 
+						-TextGalactic.Settings.font_size * 2 
+					),
 					size: [TextGalactic.Settings.font_stretch, TextGalactic.Settings.font_size]
 				}),
-			player: this.options.player
+			player: this.options.player,
+			enemyType: getRandomInt(0, 8),
+			enemies: this
 		});
 
 		return enemy;
