@@ -8,19 +8,19 @@ TextGalactic.BullitTypes = {
 	big: {
 		text: "o",
 		rate: 5,
-		speed: 200,
+		speed: 100,
 		color: "#ccc"
 	},
 	rocket: {
 		text: "^",
 		rate: 3,
-		speed: 200,
+		speed: 100,
 		color: "#ccc"
 	},
 	lazer: {
 		text: "|",
-		rate: 2,
-		speed: 200,
+		rate: 3,
+		speed: 300,
 		color: "#ccc"
 	}
 };
