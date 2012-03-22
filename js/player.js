@@ -37,9 +37,13 @@ TextGalactic.Player = atom.Class(
 	bullitType: TextGalactic.BullitTypes['simple'],
 
 	hit: function () {
-		this.healf = this.healf - 50;
-		console.log(this.healf);
+		this.healf = this.healf - 25;
 		this.redraw();
+
+		if (this.healf < 0) {
+			this.destroy();
+		}
+
 		return this;
 	},
 
