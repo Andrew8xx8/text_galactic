@@ -50,6 +50,7 @@ TextGalactic.Enemies = atom.Class({
 			var shape = this.storage[i].shape;
 			if (shape.hasPoint(point)) {
 				if (this.storage[i].hit() == null) {
+					this.storage[i].destroy();
 					this.storage.splice(i, 1);
 					this.create();
 				}

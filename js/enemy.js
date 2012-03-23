@@ -123,25 +123,27 @@ TextGalactic.Enemy = atom.Class(
 	},
 
 	onUpdate: function (time) {
-		var moveSpeed = (this.speed * time).toSeconds().round();
+		if (this.health > 0) {
+			var moveSpeed = (this.speed * time).toSeconds().round();
 
-		move(this, this.dx * moveSpeed, this.dy * moveSpeed);
+			move(this, this.dx * moveSpeed, this.dy * moveSpeed);
 
-		this.normalize_d();
+			this.normalize_d();
 
-		// make shoot
-		if (this.enemy.bulletType !== undefined) {
-			if (this.rate > this.enemy.bulletType.rate * 4) {
-				this.options.controller.getBullets().create(
-					new Point(this.shape.from.x, this.shape.to.y),
-					this.enemy.bulletType,
-					'down'
-				);
+			// make shoot
+			if (this.enemy.bulletType !== undefined) {
+				if (this.rate > this.enemy.bulletType.rate * 4) {
+					this.options.controller.getBullets().create(
+						new Point(this.shape.from.x, this.shape.to.y),
+						this.enemy.bulletType,
+						'down'
+					);
 
-				this.rate = 0;
+					this.rate = 0;
+				}
+
+				this.rate++;
 			}
-
-			this.rate++;
 		}
 	},
 
