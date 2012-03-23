@@ -34,7 +34,7 @@ TextGalactic.Player = atom.Class(
 
 	speed: TextGalactic.Settings.speed - 50	,
 
-	bulletType: TextGalactic.BullitTypes['simple'],
+	bulletType: TextGalactic.BulletTypes['simple'],
 
 	hit: function () {
 		this.health = this.health - 25;
@@ -93,7 +93,7 @@ TextGalactic.Player = atom.Class(
 		move(this, dx, dy);
 
 		if (this.rate > this.bulletType.rate) {
-			this.options.controller.getBullits().create(
+			this.options.controller.getBullets().create(
 				new Point(this.shape.from.x, this.shape.from.y),
 				this.bulletType,
 				'up'

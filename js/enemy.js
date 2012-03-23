@@ -1,4 +1,4 @@
-TextGalactic.Enemies = {
+TextGalactic.EnemiesTypes = {
 	0: {
 		text: "W",
 		health: 100,
@@ -76,8 +76,7 @@ TextGalactic.Enemy = atom.Class(
 	/** @constructs */
 	initialize: function (scene, options) {
 		this.parent( scene, options );
-		this.addEvent( 'moveDrag', this.redraw );
-		this.enemy = TextGalactic.Enemies[options.enemyType];
+		this.enemy = TextGalactic.EnemiesTypes[options.enemyType];
 		this.speed = this.enemy.speed;
 		this.health = this.enemy.health;
 		this.dx = (getRandomInt(0, 1) == 0) ? 1: -1;

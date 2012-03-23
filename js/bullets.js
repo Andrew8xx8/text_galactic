@@ -15,31 +15,31 @@ TextGalactic.Bullets = atom.Class({
 		}
 	},
 
-	create: function (fromPoint, bullitType, direction) {
-		var bullit = this.storage.push(new TextGalactic.Bullet(this.scene, {
+	create: function (fromPoint, bulletType, direction) {
+		var bullet = this.storage.push(new TextGalactic.Bullet(this.scene, {
 			shape: new Circle(fromPoint, TextGalactic.Settings.font_size),
-			type: bullitType,
+			type: bulletType,
 			direction: direction,
-			bullits: this
+			bullets: this
 		}));
 
-		return bullit;
+		return bullet;
 	},
 
-	checkPlayerCollision: function (bullit) {
+	checkPlayerCollision: function (bullet) {
 		var player = this.controller.getPlayer();
 
-		if (player.getCollisionRectangle(bullit.shape.radius).hasPoint(bullit.shape)) {
+		if (player.getCollisionRectangle(bullet.shape.radius).hasPoint(bullet.shape)) {
 			player.hit();
-			bullit.destroy();
+			bullet.destroy();
 		}
 	},
 
-	checkEnemyCollision: function (bullit) {
-		var enemy = this.controller.getEnemies().find([bullit.shape._center.x, bullit.shape._center.y]);
+	checkEnemyCollision: function (bullet) {
+		var enemy = this.controller.getEnemies().find([bullet.shape._center.x, bullet.shape._center.y]);
 
 		if (enemy !== null) {
-			bullit.explode();
+			bullet.explode();
 		}
 	},
 });
