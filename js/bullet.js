@@ -1,4 +1,4 @@
-TextGalactic.BullitTypes = {
+TextGalactic.BulletTypes = {
 	simple: {
 		text: ".",
 		rate: 10,
@@ -25,9 +25,9 @@ TextGalactic.BullitTypes = {
 	}
 };
 
-TextGalactic.Bullit = atom.Class(
+TextGalactic.Bullet = atom.Class(
 /**
- * @lends TextGalactic.Bullit#
+ * @lends TextGalactic.Bullet#
  * @augments LibCanvas.Scene.Element#
  */
 {
@@ -35,7 +35,7 @@ TextGalactic.Bullit = atom.Class(
 	
 	direction: 'up',
 
-	type: TextGalactic.BullitTypes['simple'],
+	type: TextGalactic.BulletTypes['simple'],
 
 	/** @constructs */
 	initialize: function (scene, options) {
@@ -54,12 +54,12 @@ TextGalactic.Bullit = atom.Class(
 
 		if (this.direction == 'up') {
 			move(this, 0, -moveSpeed);
-			this.options.bullits.checkEnemyCollision(this);
+			this.options.bullets.checkEnemyCollision(this);
 		} else {
 			move(this, 0, moveSpeed);
-			this.options.bullits.checkPlayerCollision(this);
+			this.options.bullets.checkPlayerCollision(this);
 		}
-		// Deestroy bullit if it's the canvas
+		// Deestroy bullet if it's the canvas
 		if (
 			this.shape._center.y > this.scene.resources.rectangle.to.y 
 			|| this.shape._center.y < this.scene.resources.rectangle.from.y 
@@ -70,7 +70,7 @@ TextGalactic.Bullit = atom.Class(
 
 	explode: function (){
 		this.destroy;
-		this.options.bullits._destroy(this);
+		this.options.bullets._destroy(this);
 	},
 
 	renderTo: function (ctx) {
