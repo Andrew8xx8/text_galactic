@@ -150,7 +150,7 @@ TextGalactic.Enemy = atom.Class(
 	renderTo: function (ctx) {
 		//ctx.fill( this.shape, ctx.createRectangleGradient( this.shape, this.colors[this.lives] ));
 		var healthq = Math.round(this.health/this.enemy.health * 255);
-		ctx.fillStyle = "rgb(" + (healthq) + ", " + (healthq) + "," + (healthq) + ")";
+		ctx.fillStyle = "rgb(255, " + (healthq) + "," + (healthq) + ")";
 
 		ctx.font = "normal normal " + TextGalactic.Settings.font_size + "px courier";
     	ctx.fillText(this.enemy.text, this.shape.from.x, this.shape.to.y);
