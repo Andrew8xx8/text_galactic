@@ -1,4 +1,4 @@
-TextGalactic.Bullits = atom.Class({
+TextGalactic.Bullets = atom.Class({
 
 	Extends: TextGalactic.Collection,
 
@@ -16,7 +16,7 @@ TextGalactic.Bullits = atom.Class({
 	},
 
 	create: function (fromPoint, bullitType, direction) {
-		var bullit = this.storage.push(new TextGalactic.Bullit(this.scene, {
+		var bullit = this.storage.push(new TextGalactic.Bullet(this.scene, {
 			shape: new Circle(fromPoint, TextGalactic.Settings.font_size),
 			type: bullitType,
 			direction: direction,
