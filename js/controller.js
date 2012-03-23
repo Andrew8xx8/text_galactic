@@ -19,13 +19,13 @@ TextGalactic.Controller = atom.Class(
 
 		this.enemies = new TextGalactic.Enemies(this.activeScene, this);
 
-		this.bullits = new TextGalactic.Bullits(this.activeScene, this);
+		this.bullets = new TextGalactic.Bullets(this.activeScene, this);
 
 		this.createEnemies()
 	},
 
-	getBullits: function() {
-		return this.bullits;
+	getBullets: function() {
+		return this.bullets;
 	},
 
 	getPlayer: function() {

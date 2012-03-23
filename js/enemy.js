@@ -1,52 +1,52 @@
-TextGalactic.Enemis = {
+TextGalactic.Enemies = {
 	0: {
 		text: "W",
-		healf: 100,
+		health: 100,
 		speed: 150,
 	},
 	1: {
 		text: "T",
-		healf: 150,
+		health: 150,
 		speed: 140,
 	},
 	2: {
 		text: "Y",
-		healf: 200,
+		health: 200,
 		speed: 130,
-		bullitType: TextGalactic.BullitTypes['big'],	
+		bulletType: TextGalactic.BulletTypes['big'],	
 	},
 	3: {
 		text: "U",
-		healf: 250,
+		health: 250,
 		speed: 120,
 	},
 	4: {
 		text: "I",
-		healf: 300,
+		health: 300,
 		speed: 110,
-		bullitType: TextGalactic.BullitTypes['lazer'],	
+		bulletType: TextGalactic.BulletTypes['lazer'],	
 	},
 	5: {
 		text: "H",
-		healf: 350,
+		health: 350,
 		speed: 100,
 	},
 	6: {
 		text: "X",
-		healf: 360,
+		health: 360,
 		speed: 90,
-		bullitType: TextGalactic.BullitTypes['simple'],	
+		bulletType: TextGalactic.BulletTypes['simple'],	
 	},
 	7: {
 		text: "V",
-		healf: 370,
+		health: 370,
 		speed: 70,
 	},
 	8: {
 		text: "M",
-		healf: 380,
+		health: 380,
 		speed: 50,
-		bullitType: TextGalactic.BullitTypes['simple'],	
+		bulletType: TextGalactic.BulletTypes['simple'],	
 	}
 }
 
@@ -77,9 +77,9 @@ TextGalactic.Enemy = atom.Class(
 	initialize: function (scene, options) {
 		this.parent( scene, options );
 		this.addEvent( 'moveDrag', this.redraw );
-		this.enemy = TextGalactic.Enemis[options.enemyType];
+		this.enemy = TextGalactic.Enemies[options.enemyType];
 		this.speed = this.enemy.speed;
-		this.healf = this.enemy.healf;
+		this.health = this.enemy.health;
 		this.dx = (getRandomInt(0, 1) == 0) ? 1: -1;
 		this.dy = getRandomArbitary(0.8, 1.2);
 	},
@@ -89,7 +89,7 @@ TextGalactic.Enemy = atom.Class(
 	},
 
 	rate: 0,
-	healf: 0,
+	health: 0,
 
 	dx: 1,
 	dy: -1,
@@ -99,10 +99,10 @@ TextGalactic.Enemy = atom.Class(
 	speed: TextGalactic.Settings.speed - 50	,
 
 	hit: function() {
-		this.healf = this.healf - 100;
+		this.health = this.health - 100;
 		this.redraw();
 
-		if (this.healf < 0) {
+		if (this.health < 0) {
 			return null;
 		}
 
@@ -131,11 +131,11 @@ TextGalactic.Enemy = atom.Class(
 		this.normalize_d();
 
 		// make shoot
-		if (this.enemy.bullitType !== undefined) {
-			if (this.rate > this.enemy.bullitType.rate * 4) {
-				this.options.controller.getBullits().create(
+		if (this.enemy.bulletType !== undefined) {
+			if (this.rate > this.enemy.bulletType.rate * 4) {
+				this.options.controller.getBullets().create(
 					new Point(this.shape.from.x, this.shape.to.y),
-					this.enemy.bullitType,
+					this.enemy.bulletType,
 					'down'
 				);
 
@@ -148,8 +148,8 @@ TextGalactic.Enemy = atom.Class(
 
 	renderTo: function (ctx) {
 		//ctx.fill( this.shape, ctx.createRectangleGradient( this.shape, this.colors[this.lives] ));
-		var healfq = Math.round(this.healf/this.enemy.healf * 255);
-		ctx.fillStyle = "rgb(" + (healfq) + ", " + (healfq) + "," + (healfq) + ")";
+		var healthq = Math.round(this.health/this.enemy.health * 255);
+		ctx.fillStyle = "rgb(" + (healthq) + ", " + (healthq) + "," + (healthq) + ")";
 
 		ctx.font = "normal normal " + TextGalactic.Settings.font_size + "px courier";
     	ctx.fillText(this.enemy.text, this.shape.from.x, this.shape.to.y);

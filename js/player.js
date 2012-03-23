@@ -28,19 +28,19 @@ TextGalactic.Player = atom.Class(
 		return this.collisionRectangle;
 	},
 
-	healf: 300,
+	health: 300,
 
 	rate: 0,
 
 	speed: TextGalactic.Settings.speed - 50	,
 
-	bullitType: TextGalactic.BullitTypes['simple'],
+	bulletType: TextGalactic.BullitTypes['simple'],
 
 	hit: function () {
-		this.healf = this.healf - 25;
+		this.health = this.health - 25;
 		this.redraw();
 
-		if (this.healf < 0) {
+		if (this.health < 0) {
 			this.destroy();
 		}
 
@@ -92,10 +92,10 @@ TextGalactic.Player = atom.Class(
 
 		move(this, dx, dy);
 
-		if (this.rate > this.bullitType.rate) {
+		if (this.rate > this.bulletType.rate) {
 			this.options.controller.getBullits().create(
 				new Point(this.shape.from.x, this.shape.from.y),
-				this.bullitType,
+				this.bulletType,
 				'up'
 			);
 
@@ -106,8 +106,8 @@ TextGalactic.Player = atom.Class(
 	},
 
 	renderTo: function (ctx) {
-		var healfq = Math.round(this.healf/300 * 255);
-		ctx.fillStyle = "rgb(255, " + (healfq) + "," + (healfq) + ")";
+		var healthq = Math.round(this.health/300 * 255);
+		ctx.fillStyle = "rgb(255, " + (healthq) + "," + (healthq) + ")";
 		ctx.font = "normal normal " + TextGalactic.Settings.font_size + "px courier";
     	ctx.fillText("A", this.shape.from.x, this.shape.to.y);
 
