@@ -3,50 +3,59 @@ TextGalactic.EnemiesTypes = {
 		text: "W",
 		health: 100,
 		speed: 150,
+		score: 10,
 	},
 	1: {
 		text: "T",
 		health: 150,
 		speed: 140,
+		score: 20,
 	},
 	2: {
 		text: "Y",
 		health: 200,
 		speed: 130,
 		bulletType: TextGalactic.BulletTypes['big'],	
+		score: 30,
 	},
 	3: {
 		text: "U",
 		health: 250,
 		speed: 120,
+		score: 40,
 	},
 	4: {
 		text: "I",
 		health: 300,
 		speed: 110,
 		bulletType: TextGalactic.BulletTypes['lazer'],	
+		score: 50,
 	},
 	5: {
 		text: "H",
 		health: 350,
 		speed: 100,
+		score: 40,
 	},
 	6: {
 		text: "X",
 		health: 360,
 		speed: 90,
 		bulletType: TextGalactic.BulletTypes['simple'],	
+		score: 30,
 	},
 	7: {
 		text: "V",
 		health: 370,
 		speed: 70,
+		score: 20,
 	},
 	8: {
 		text: "M",
 		health: 380,
 		speed: 50,
 		bulletType: TextGalactic.BulletTypes['simple'],	
+		score: 10,
 	}
 }
 

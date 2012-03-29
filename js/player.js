@@ -56,7 +56,7 @@ TextGalactic.Player = atom.Class(
 	},
 
 	normalize_dy: function (dy) {
-		if (dy + this.shape.to.y > this.scene.resources.rectangle.to.y || dy + this.shape.from.y < 0) {
+		if (dy + this.shape.to.y > this.scene.resources.rectangle.to.y - TextGalactic.Settings.font_size  || dy + this.shape.from.y < 0) {
 			dy = 0;
 		}
 
