@@ -42,6 +42,7 @@ TextGalactic.Player = atom.Class(
 
 		if (this.health < 0) {
 			this.destroy();
+			this.options.controller.gameOver();
 		}
 
 		return this;

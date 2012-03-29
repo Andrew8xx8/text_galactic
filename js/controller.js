@@ -58,6 +58,24 @@ TextGalactic.Controller = atom.Class(
 		}));
 	},
 
+	gameOver: function () {
+		var ctx = this.ctx;
+
+		ctx.fillStyle = "#fff";
+		ctx.font = "normal normal " + (TextGalactic.Settings.font_size + 15) + "px courier";
+		ctx.fillText(
+			"Game over", 
+			Math.round(this.activeScene.resources.rectangle.to.x / 2) - 110, 
+			Math.round(this.activeScene.resources.rectangle.to.y / 2)
+		);
+		ctx.font = "normal normal " + (TextGalactic.Settings.font_size) + "px courier";
+		ctx.fillText(
+			"You score: " + this.score, 
+			Math.round(this.activeScene.resources.rectangle.to.x / 2) - 100, 
+			Math.round(this.activeScene.resources.rectangle.to.y / 2) + (TextGalactic.Settings.font_size + 15)
+		);
+	},
+
 	drawScore: function () {
 		var ctx = this.ctx;
 		ctx.fillStyle = "#000";
