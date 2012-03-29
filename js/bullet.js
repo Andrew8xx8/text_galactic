@@ -74,8 +74,6 @@ TextGalactic.Bullet = atom.Class(
 	},
 
 	renderTo: function (ctx) {
-		//ctx.fill( this.shape);
-
 		ctx.fillStyle = this.type.color;
 		ctx.font = "normal normal " + TextGalactic.Settings.font_size + "px courier";
     	ctx.fillText(this.type.text, this.shape._center.x, this.shape._center.y);

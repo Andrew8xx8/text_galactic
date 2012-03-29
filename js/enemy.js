@@ -67,21 +67,6 @@ TextGalactic.Enemy = atom.Class(
 {
 	Extends: LibCanvas.Scene.Element,
 
-	colors: {
-		3: {
-			'0.0': '#f66',
-			'1.0': '#900'
-		},
-		2: {
-			'0.0': '#ff6',
-			'1.0': '#f60'
-		},
-		1: {
-			'0.0': '#6f6',
-			'1.0': '#090'
-		}
-	},
-
 	/** @constructs */
 	initialize: function (scene, options) {
 		this.parent( scene, options );
@@ -157,7 +142,6 @@ TextGalactic.Enemy = atom.Class(
 	},
 
 	renderTo: function (ctx) {
-		//ctx.fill( this.shape, ctx.createRectangleGradient( this.shape, this.colors[this.lives] ));
 		var healthq = Math.round(this.health/this.enemy.health * 255);
 		ctx.fillStyle = "rgb(255, " + (healthq) + "," + (healthq) + ")";
 
