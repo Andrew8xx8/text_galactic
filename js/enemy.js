@@ -74,7 +74,7 @@ TextGalactic.Enemy = atom.Class(
 		this.speed = this.enemy.speed;
 		this.health = this.enemy.health;
 		this.dx = (getRandomInt(0, 1) == 0) ? 1: -1;
-		this.dy = getRandomArbitary(0.8, 1.2);
+		this.dy = getRandomArbitary(0.8, 1.3);
 	},
 
 	getCollisionRectangle: function () {
@@ -99,6 +99,8 @@ TextGalactic.Enemy = atom.Class(
 			return null;
 		}
 
+		this.changeVector();
+
 		return this;
 	},
 
@@ -114,6 +116,11 @@ TextGalactic.Enemy = atom.Class(
 		if (this.shape.from.y < -TextGalactic.Settings.font_size * 2) {
 			this.dy = -this.dy;
 		}
+	},
+
+	changeVector: function() {
+		this.dx = (getRandomInt(0, 1) == 0) ? 1: -1;
+		this.dy = getRandomArbitary(0.8, 1.3);
 	},
 
 	onUpdate: function (time) {

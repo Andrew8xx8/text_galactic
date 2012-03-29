@@ -93,7 +93,7 @@ TextGalactic.Player = atom.Class(
 
 		move(this, dx, dy);
 
-		if (this.rate > this.bulletType.rate) {
+		if (this.rate > this.bulletType.rate / 2) {
 			this.options.controller.getBullets().create(
 				new Point(this.shape.from.x, this.shape.from.y),
 				this.bulletType,
