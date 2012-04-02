@@ -1,24 +1,71 @@
 TextGalactic.Controller = Class.extend({
+	activeKeys: [0,0,0,0,0], 
+
 	init: function (container) {
 		this.canvas = Raphael(document.getElementById(container),400,300);
 
-		this.player = this.createPlayer();
-		
-		console.log(this.player);
+		this.player = this.createPlayer();		
+
+		this.bullets = this.canvas.set();
+	//	console.log(this.player);
 	},
 
 	createPlayer: function (center) {
-		var player = {
-			height: TextGalactic.Settings.font_size,
-			width: TextGalactic.Settings.font_stretch
-		}
-
-		return new TextGalactic.Player(this.canvas);
+		return new TextGalactic.Player(this.canvas, {
+			x: 10, 
+			y: 20,
+			text: "A"
+		});
 	},
 
 	update: function() {
-		console.log(this);
-	///	this.player.onUpdate();
+		//this.player.onUpdate();
+		//console.log(this.activeKeys);
+		this.movePlayer();
+
+		this.playerShoot();
+
+		this.player.update(this.canvas);
+console.log(this.bullets);
+		this.bullets.attr({
+			fill: "#fff"
+		});
+		this.bullets.animate({
+			scale: 1,
+		}, 10, "linear");
+	},
+
+	movePlayer: function () {
+		if (this.activeKeys['aleft'] && this.activeKeys['aup']) {
+			this.player.move(-1, -1);
+		} else if (this.activeKeys['aleft'] && this.activeKeys['adown']) {
+			this.player.move(-1, 1);
+		} else if (this.activeKeys['aright'] && this.activeKeys['aup']) {			
+			this.player.move(1, -1);
+		} else if (this.activeKeys['aright'] && this.activeKeys['adown']) {
+			this.player.move(1, 1);
+		} else if (this.activeKeys['aleft']) {
+			this.player.move(-1, 0);
+		} else if (this.activeKeys['aright']) {
+			this.player.move(1, 0);
+		} else if (this.activeKeys['aup']) {
+			this.player.move(0, -1);
+		} else if (this.activeKeys['adown']) {
+			this.player.move(0, 1);
+		}
+	},
+
+	playerShoot: function () {
+		if (this.activeKeys['ctrl'] && this.player.canShoot()) {
+			var start = this.player.getPosition();
+			this.bullets.push(this.canvas.text(
+				start.x, start.y, this.player.bulletType.text
+			));
+		}
+	},
+
+	draw: function () {
+		
 	},
 
 	ctx: null,
@@ -84,4 +131,28 @@ TextGalactic.Controller = Class.extend({
 	increaseScore: function (score) {
 		this.score = this.score + score;
 	},
+
+	changeKey: function (which, to) {
+		switch (which){
+			case 65: case 37: // left
+				this.activeKeys['aleft'] = to; 
+				break;
+			case 87: case 38:  // up
+				this.activeKeys['aup'] = to; 
+				break;
+			case 68: case 39: // right
+				this.activeKeys['aright'] = to; 
+				break;
+			case 83: case 40: // down
+				this.activeKeys['adown'] = to; 
+				break;
+			case 32: // space bar;
+				this.activeKeys[4] = to; 
+				break;
+			case 17: // ctrl
+				this.activeKeys['ctrl'] = to; 
+				break;
+		}
+	},
+
 });

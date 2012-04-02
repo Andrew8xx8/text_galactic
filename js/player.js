@@ -1,8 +1,7 @@
-TextGalactic.Player = Class.extend({
+TextGalactic.Player = TextGalactic.Primitive.extend({
 	/** @constructs */
-	initialize: function (canvas, options) {
-		this.canvas = canvas;
-		this.options = options;
+	initialize: function (options) {
+			
 	},
 
 	getCollisionRectangle: function (radius) {
@@ -17,9 +16,26 @@ TextGalactic.Player = Class.extend({
 
 	rate: 0,
 
-	speed: 250,
+	bulletType: TextGalactic.BulletTypes['simple'],
 
-	bulletType: '',//TextGalactic.BulletTypes['simple'],
+	canShoot: function() {
+		
+		this.rate++;
+
+		if (this.rate > this.bulletType.rate / 2) {
+			this.rate = 0;
+			return true;
+		}
+
+		return false;
+	},
+
+	getPosition: function () {
+		return {
+			x: this.shape.attr('x'),
+			y: this.shape.attr('y')
+		}
+	},
 
 	hit: function () {
 		this.health = this.health - 25;
@@ -50,33 +66,9 @@ TextGalactic.Player = Class.extend({
 	},
 	
 	onUpdate: function (time) {
-		var keys = this.scene.resources.keyboard;
+		/*var keys = this.scene.resources.keyboard;
 		var moveSpeed = (this.speed * time).toSeconds().round();
 		var dx = 0; var dy = 0;
-
-		if (keys.keyState('aleft') && keys.keyState('aup')) {
-			dx = this.normalize_dx(-moveSpeed); 
-			dy = this.normalize_dy(-moveSpeed);
-		} else if (keys.keyState('aleft') && keys.keyState('adown')) {
-			dx = this.normalize_dx(-moveSpeed); 
-			dy = this.normalize_dy(moveSpeed);
-		} else if (keys.keyState('aright') && keys.keyState('aup')) {
-			dx = this.normalize_dx(moveSpeed); 
-			dy = this.normalize_dy(-moveSpeed);
-		} else if (keys.keyState('aright') && keys.keyState('adown')) {
-			dx = this.normalize_dx(moveSpeed);
-			dy = this.normalize_dy(moveSpeed);
-		} if (keys.keyState('aleft')) {
-			dx = this.normalize_dx(-moveSpeed); 
-		} else if (keys.keyState('aright')) {
-			dx = this.normalize_dx(moveSpeed); 
-		} else if (keys.keyState('aup')) {
-			dy = this.normalize_dy(-moveSpeed); 
-		} else if (keys.keyState('adown')) {
-			dy = this.normalize_dy(moveSpeed);
-		}
-
-		move(this, dx, dy);
 
 		if (this.rate > this.bulletType.rate / 2) {
 			this.options.controller.getBullets().create(
@@ -88,15 +80,14 @@ TextGalactic.Player = Class.extend({
 			this.rate = 0;
 		}
 
-		this.rate++;
+		this.rate++;*/
 	},
 
-	renderTo: function (ctx) {
+	update: function (canvas) {
 		var healthq = Math.round(this.health/300 * 255);
-		ctx.fillStyle = "rgb(255, " + (healthq) + "," + (healthq) + ")";
-		ctx.font = "normal normal " + TextGalactic.Settings.font_size + "px courier";
-    	ctx.fillText("A", this.shape.from.x, this.shape.to.y);
 
-		return this.parent();
+		this.shape.attr({
+			fill: "rgb(255, " + (healthq) + "," + (healthq) + ")"
+		})
 	}
 });

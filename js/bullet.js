@@ -25,25 +25,30 @@ TextGalactic.BulletTypes = {
 	}
 };
 
-TextGalactic.Bullet = atom.Class(
-/**
- * @lends TextGalactic.Bullet#
- * @augments LibCanvas.Scene.Element#
- */
-{
-	Extends: LibCanvas.Scene.Element,
-	
+TextGalactic.Bullet = TextGalactic.Primitive.extend({
 	direction: 'up',
 
 	type: TextGalactic.BulletTypes['simple'],
 
-	/** @constructs */
-	initialize: function (scene, options) {
-		this.parent(scene, options);
-		this.moveSpeed = (this.type.speed);
+	init: function (canvas, options) {
+		this._super(canvas, options);
+
 		this.type = options.type;
 		this.direction = options.direction;
+		this.animationSpeeed = this.type.speed;
+
+		this.shape.attr({
+			fill: options.type.color
+		});
+		
+		return this.shape;
 	},
+
+	/*move: function (direction) {		
+		this.shape.animate({
+			y: 0
+		}, this.type.speed, "<");
+	},*/
 
 	getContainer: function () {
 		return this.scene.resources.rectangle.clone().grow( -this.shape.radius*2 );

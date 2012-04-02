@@ -1,4 +1,4 @@
-TextGalactic.Bullets = atom.Class({
+TextGalactic.Bullets = Class.extend({
 
 	Extends: TextGalactic.Collection,
 
