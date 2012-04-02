@@ -1,31 +1,24 @@
-TextGalactic.Controller = atom.Class(
-/**
- * @lends TextGalactic.Controller#
- */
-{
-	/** @constructs */
-	initialize: function () {
-		var app = new LibCanvas.App( 'canvas', {
-				keyboard: true,
-				width   : 350,
-				height  : 450
-			});
+TextGalactic.Controller = Class.extend({
+	init: function (container) {
+		this.canvas = Raphael(document.getElementById(container),400,300);
 
-		this.ctx = app.libcanvas.ctx;
-
-		this.drawBackground();
-
-		this.activeScene = app.createScene( 'active' );
+		this.player = this.createPlayer();
 		
-		this.player = this.createPlayer(new Point( 50, 400 ));
+		console.log(this.player);
+	},
 
-		this.enemies = new TextGalactic.Enemies(this.activeScene, this);
+	createPlayer: function (center) {
+		var player = {
+			height: TextGalactic.Settings.font_size,
+			width: TextGalactic.Settings.font_stretch
+		}
 
-		this.bullets = new TextGalactic.Bullets(this.activeScene, this);
+		return new TextGalactic.Player(this.canvas);
+	},
 
-		this.createEnemies();
-
-		this.drawScore();
+	update: function() {
+		console.log(this);
+	///	this.player.onUpdate();
 	},
 
 	ctx: null,
@@ -91,19 +84,4 @@ TextGalactic.Controller = atom.Class(
 	increaseScore: function (score) {
 		this.score = this.score + score;
 	},
-
-	createPlayer: function (center) {
-		var player = {
-			height: TextGalactic.Settings.font_size,
-			width: TextGalactic.Settings.font_stretch
-		}
-
-		return new TextGalactic.Player( this.activeScene, {
-			shape: new Rectangle({
-					from: center.clone().move( [-player.width/2, -player.height/2] ),
-					size: [player.width, player.height]
-				}),
-			controller: this		
-		});
-	}
 });

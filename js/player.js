@@ -1,23 +1,8 @@
-TextGalactic.Player = atom.Class(
-/**
- * @lends TextGalactic.Enemy#
- * @augments LibCanvas.Scene.Element#
- */
-{
-	Extends: LibCanvas.Scene.Element,
-
+TextGalactic.Player = Class.extend({
 	/** @constructs */
-	initialize: function (scene, options) {
-		this.parent( scene, options );
-		this.addEvent( 'moveDrag', this.redraw );
-	},
-
-	get strokeRectangle () {
-		var shape = this.shape.clone();
-		var shift = new Point(.5, .5);
-		shape.from.move(shift);
-		shape.to.move(shift, true);
-		return shape;
+	initialize: function (canvas, options) {
+		this.canvas = canvas;
+		this.options = options;
 	},
 
 	getCollisionRectangle: function (radius) {
@@ -32,9 +17,9 @@ TextGalactic.Player = atom.Class(
 
 	rate: 0,
 
-	speed: TextGalactic.Settings.speed - 50	,
+	speed: 250,
 
-	bulletType: TextGalactic.BulletTypes['simple'],
+	bulletType: '',//TextGalactic.BulletTypes['simple'],
 
 	hit: function () {
 		this.health = this.health - 25;
