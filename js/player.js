@@ -26,7 +26,7 @@ TextGalactic.Player = TextGalactic.Primitive.extend({
 	},
 
 	canMoveY: function (toY) {
-		if (toY < 0 || toY > this.bounds.height) {
+		if (this.yOutOfBounds(toY)) {
 			return false;
 		} 
 
@@ -34,7 +34,7 @@ TextGalactic.Player = TextGalactic.Primitive.extend({
 	},
 
 	canMoveX: function (toX) {
-		if (toX < 0 || toX > this.bounds.width) {
+		if (this.yOutOfBounds(toX)) {
 			return false;
 		} 
 

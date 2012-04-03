@@ -104,6 +104,24 @@ TextGalactic.Enemy = atom.Class(
 		return this;
 	},
 
+	canMoveY: function (toY) {
+		if (this.yOutOfBounds(toY)) {
+			this.explode();
+
+			return false;
+		}
+
+		return true;
+	},
+
+	canMoveX: function (toX) {
+		if (this.xOutOfBounds(toX)) {
+			this.dX = -this.dX;
+		} 
+
+		return true;
+	},
+
 	normalize_d: function () {
 		if (this.shape.from.y > this.scene.resources.rectangle.to.y) {
 			this.kill();
