@@ -3,6 +3,8 @@ TextGalactic.Primitive = Class.extend({
 
 	animationSpeeed: 0,
 
+	exploded: false,
+
 	init: function (canvas, options) {
 		this.x = (options.x != 'undefined') ? options.x : 0;
 		this.y = (options.y != 'undefined') ? options.y : 0;
@@ -64,5 +66,16 @@ TextGalactic.Primitive = Class.extend({
 
 	yOutOfBounds: function (y) {
 		return (y - TextGalactic.Settings.halfSize < 0 || y + TextGalactic.Settings.halfSize > this.bounds.height);
-	}
+	},
+
+	explode: function () {
+		this.exploded = true;
+		this.shape.remove();
+	},
+
+	destroy: function () {
+		for(var x in this) {
+			delete this[x];
+		}
+	},
 });

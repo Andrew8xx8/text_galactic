@@ -30,8 +30,6 @@ TextGalactic.Bullet = TextGalactic.Primitive.extend({
 
 	type: TextGalactic.BulletTypes['simple'],
 
-	exploded: false,
-
 	init: function (canvas, options) {
 		this.type = options.type;
 		options.text = options.type.text;
@@ -86,15 +84,4 @@ TextGalactic.Bullet = TextGalactic.Primitive.extend({
 			this.destroy();
 		}
 	},
-
-	explode: function () {
-		this.exploded = true;
-		this.shape.remove();
-	},
-
-	destroy: function () {
-		for(var x in this) {
-			delete this[x];
-		}
-	}
 });
