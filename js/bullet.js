@@ -2,24 +2,24 @@ TextGalactic.BulletTypes = {
 	simple: {
 		text: ".",
 		rate: 10,
-		speed: 450,
+		speed: 5,
 		color: "#ccc"
 	},
 	big: {
 		text: "o",
 		rate: 5,
-		speed: 100,
+		speed: 4,
 		color: "#ccc"
 	},
 	rocket: {
 		text: "^",
 		rate: 3,
-		speed: 100,
+		speed: 2,
 		color: "#ccc"
 	},
 	lazer: {
 		text: "|",
-		rate: 3,
+		rate: 4,
 		speed: 300,
 		color: "#ccc"
 	}
@@ -30,10 +30,16 @@ TextGalactic.Bullet = TextGalactic.Primitive.extend({
 
 	type: TextGalactic.BulletTypes['simple'],
 
+	exploded: false,
+
 	init: function (canvas, options) {
+		this.type = options.type;
+		options.text = options.type.text;
+
 		this._super(canvas, options);
 
-		this.type = options.type;
+		this.moveSpeed = this.type.speed;
+
 		this.direction = options.direction;
 		this.animationSpeeed = this.type.speed;
 
@@ -44,11 +50,19 @@ TextGalactic.Bullet = TextGalactic.Primitive.extend({
 		return this.shape;
 	},
 
-	/*move: function (direction) {		
-		this.shape.animate({
-			y: 0
-		}, this.type.speed, "<");
-	},*/
+	update: function () {
+		this.move(0, (this.direction == 'up') ? -1 : 1);
+	},
+
+	canMove: function (toX, toY) {
+		if (toY < 0 || toY > this.bounds.height) {
+			this.explode()
+
+			return false;
+		} 
+
+		return true;
+	},
 
 	getContainer: function () {
 		return this.scene.resources.rectangle.clone().grow( -this.shape.radius*2 );
@@ -73,16 +87,14 @@ TextGalactic.Bullet = TextGalactic.Primitive.extend({
 		}
 	},
 
-	explode: function (){
-		this.destroy;
-		this.options.bullets._destroy(this);
+	explode: function () {
+		this.exploded = true;
+		this.shape.remove();
 	},
 
-	renderTo: function (ctx) {
-		ctx.fillStyle = this.type.color;
-		ctx.font = "normal normal " + TextGalactic.Settings.font_size + "px courier";
-    	ctx.fillText(this.type.text, this.shape._center.x, this.shape._center.y);
-
-		return this.parent();
+	destroy: function () {
+		for(var x in this) {
+			delete this[x];
+		}
 	}
 });

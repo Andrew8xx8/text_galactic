@@ -16,13 +16,36 @@ TextGalactic.Primitive = Class.extend({
 			(options.y != 'undefined') ? options.y : 0, 
 			(options.text != 'undefined') ? options.text : "A"
 		);
-		
+
+		this.bounds = {
+			width: canvas.width,
+			height: canvas.height,
+		};
 	},
 
-	move: function (dx, dy) {
-		this.shape.animate({
-			x: this.shape.attr('x') + (dx * this.moveSpeed),
-			y: this.shape.attr('y') + (dy * this.moveSpeed),
-		}, this.animationSpeed, "linear");
+	move: function (dX, dY) {
+		x = this.shape.attr('x');
+		y = this.shape.attr('y');
+		toX = x + (dX * this.moveSpeed);
+		toY = y + (dY * this.moveSpeed);
+
+		if (this.canMove(toX, toY)) {
+			this.shape.animate({
+				x: this.canMoveX(toX) ? toX : x,
+				y: this.canMoveY(toY) ? toY : y,
+			}, this.animationSpeed, "linear");
+		}
+	},
+
+	canMove: function (toX, toY) {
+		return true;
+	},
+
+	canMoveX: function (toX) {
+		return true;
+	},
+
+	canMoveY: function (toY) {
+		return true;
 	}
 });

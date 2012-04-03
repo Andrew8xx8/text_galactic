@@ -2,37 +2,45 @@ TextGalactic.Controller = Class.extend({
 	activeKeys: [0,0,0,0,0], 
 
 	init: function (container) {
-		this.canvas = Raphael(document.getElementById(container),400,300);
+		this.canvas = Raphael(document.getElementById(container), 400, 300);
 
 		this.player = this.createPlayer();		
 
-		this.bullets = this.canvas.set();
+		this.bullets = [];
 	//	console.log(this.player);
 	},
 
 	createPlayer: function (center) {
 		return new TextGalactic.Player(this.canvas, {
-			x: 10, 
-			y: 20,
+			x: 200, 
+			y: 280,
 			text: "A"
 		});
 	},
 
 	update: function() {
-		//this.player.onUpdate();
-		//console.log(this.activeKeys);
 		this.movePlayer();
 
 		this.playerShoot();
 
 		this.player.update(this.canvas);
-console.log(this.bullets);
-		this.bullets.attr({
-			fill: "#fff"
-		});
-		this.bullets.animate({
-			scale: 1,
-		}, 10, "linear");
+
+		this.moveBullets();
+		console.log(this.bullets);
+	},
+
+	moveBullets: function() {
+		for (i = 0; i < this.bullets.length; i++) {
+			if (typeof(this.bullets[i]) == 'object') {
+				this.bullets[i].update();
+
+				if (this.bullets[i].exploded) {
+					this.bullets[i].destroy();
+					delete this.bullets[i];
+					this.bullets.splice(i, 1);
+				}
+			}
+		}
 	},
 
 	movePlayer: function () {
@@ -58,8 +66,13 @@ console.log(this.bullets);
 	playerShoot: function () {
 		if (this.activeKeys['ctrl'] && this.player.canShoot()) {
 			var start = this.player.getPosition();
-			this.bullets.push(this.canvas.text(
-				start.x, start.y, this.player.bulletType.text
+			this.bullets.push(new TextGalactic.Bullet(
+			 	this.canvas, {
+					x: start.x, 
+					y: start.y, 
+					type: this.player.bulletType,
+					direction: 'up'
+				}
 			));
 		}
 	},

@@ -52,5 +52,5 @@ window.onload=function() {
 	};
 
 	// Start game
-	setInterval(function() { controler.update() }, 34);
+	setInterval(function() { controler.update() }, 24);
 };

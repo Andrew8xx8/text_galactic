@@ -1,9 +1,4 @@
 TextGalactic.Player = TextGalactic.Primitive.extend({
-	/** @constructs */
-	initialize: function (options) {
-			
-	},
-
 	getCollisionRectangle: function (radius) {
 		if (!this.collisionRectangle) {
 			this.collisionRectangle = this.shape.clone();
@@ -35,6 +30,22 @@ TextGalactic.Player = TextGalactic.Primitive.extend({
 			x: this.shape.attr('x'),
 			y: this.shape.attr('y')
 		}
+	},
+
+	canMoveY: function (toY) {
+		if (toY < 0 || toY > this.bounds.height) {
+			return false;
+		} 
+
+		return true;
+	},
+
+	canMoveX: function (toX) {
+		if (toX < 0 || toX > this.bounds.width) {
+			return false;
+		} 
+
+		return true;
 	},
 
 	hit: function () {
