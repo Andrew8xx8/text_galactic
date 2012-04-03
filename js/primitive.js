@@ -21,18 +21,27 @@ TextGalactic.Primitive = Class.extend({
 			width: canvas.width,
 			height: canvas.height,
 		};
+
+		this.shape.attr('font', TextGalactic.Settings.fontSize + 'px "Arial"');
+	},
+
+	getPosition: function () {
+		return {
+			x: this.shape.attr('x'),
+			y: this.shape.attr('y')
+		}
 	},
 
 	move: function (dX, dY) {
-		x = this.shape.attr('x');
-		y = this.shape.attr('y');
-		toX = x + (dX * this.moveSpeed);
-		toY = y + (dY * this.moveSpeed);
+		var pos = this.getPosition();
+
+		var toX = pos.x + (dX * this.moveSpeed);
+		var toY = pos.y + (dY * this.moveSpeed);
 
 		if (this.canMove(toX, toY)) {
 			this.shape.animate({
-				x: this.canMoveX(toX) ? toX : x,
-				y: this.canMoveY(toY) ? toY : y,
+				x: this.canMoveX(toX) ? toX : pos.x,
+				y: this.canMoveY(toY) ? toY : pos.y,
 			}, this.animationSpeed, "linear");
 		}
 	},

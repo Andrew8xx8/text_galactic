@@ -25,13 +25,6 @@ TextGalactic.Player = TextGalactic.Primitive.extend({
 		return false;
 	},
 
-	getPosition: function () {
-		return {
-			x: this.shape.attr('x'),
-			y: this.shape.attr('y')
-		}
-	},
-
 	canMoveY: function (toY) {
 		if (toY < 0 || toY > this.bounds.height) {
 			return false;
