@@ -7,6 +7,13 @@ TextGalactic.Controller = Class.extend({
 		this.player = this.createPlayer();		
 
 		this.bullets = [];
+		this.enemies = new  TextGalactic.Enemies();
+		this.enemies.create(this.canvas);
+		this.enemies.create(this.canvas);
+		this.enemies.create(this.canvas);
+		this.enemies.create(this.canvas);
+		this.enemies.create(this.canvas);
+		this.enemies.create(this.canvas);
 	//	console.log(this.player);
 	},
 
@@ -26,14 +33,18 @@ TextGalactic.Controller = Class.extend({
 		this.player.update(this.canvas);
 
 		this.moveBullets();
-		console.log(this.bullets);
+
+		this.enemies.update();
+		///console.log(this.bullets);
 	},
 
 	moveBullets: function() {
 		for (i = 0; i < this.bullets.length; i++) {
 			if (typeof(this.bullets[i]) == 'object') {
 				this.bullets[i].update();
-
+				var pos = this.bullets[i].getPosition();
+				
+				console.log(this.canvas.getElementByPoint(pos.x, pos.y));
 				if (this.bullets[i].exploded) {
 					this.bullets[i].destroy();
 					delete this.bullets[i];

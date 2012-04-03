@@ -2,96 +2,110 @@ TextGalactic.EnemiesTypes = {
 	0: {
 		text: "W",
 		health: 100,
-		speed: 150,
+		speed: 1,
 		score: 10,
 	},
 	1: {
 		text: "T",
 		health: 150,
-		speed: 140,
+		speed: 2,
 		score: 20,
 	},
 	2: {
 		text: "Y",
 		health: 200,
-		speed: 130,
+		speed: 3,
 		bulletType: TextGalactic.BulletTypes['big'],	
 		score: 30,
 	},
 	3: {
 		text: "U",
 		health: 250,
-		speed: 120,
+		speed: 4,
 		score: 40,
 	},
 	4: {
 		text: "I",
 		health: 300,
-		speed: 110,
+		speed: 5,
 		bulletType: TextGalactic.BulletTypes['lazer'],	
 		score: 50,
 	},
 	5: {
 		text: "H",
 		health: 350,
-		speed: 100,
+		speed: 4,
 		score: 40,
 	},
 	6: {
 		text: "X",
 		health: 360,
-		speed: 90,
+		speed: 3,
 		bulletType: TextGalactic.BulletTypes['simple'],	
 		score: 30,
 	},
 	7: {
 		text: "V",
 		health: 370,
-		speed: 70,
+		speed: 2,
 		score: 20,
 	},
 	8: {
 		text: "M",
 		health: 380,
-		speed: 50,
+		speed: 1,
 		bulletType: TextGalactic.BulletTypes['simple'],	
 		score: 10,
 	}
 }
 
-TextGalactic.Enemy = atom.Class(
-/**
- * @lends TextGalactic.Enemy#
- * @augments LibCanvas.Scene.Element#
- */
-{
-	Extends: LibCanvas.Scene.Element,
+TextGalactic.Enemy = TextGalactic.Primitive.extend({
+	rate: 0,
+	health: 0,
 
-	/** @constructs */
-	initialize: function (scene, options) {
-		this.parent( scene, options );
-		this.enemy = TextGalactic.EnemiesTypes[options.enemyType];
-		this.speed = this.enemy.speed;
-		this.health = this.enemy.health;
-		this.dx = (getRandomInt(0, 1) == 0) ? 1: -1;
-		this.dy = getRandomArbitary(0.8, 1.3);
+	dX: 1,
+	dY: -1,
+
+	init: function (canvas, options) {
+		this.type = options.type;
+		
+		options.text = options.type.text;
+
+		this._super(canvas, options);
+
+		this.moveSpeed = this.type.speed;
+
+		this.animationSpeeed = this.type.speed;		
+		
+		this.speed = this.type.speed;
+		this.health = this.type.health;		
+		this.dX = (getRandomInt(0, 1) == 0) ? 1: -1;	
+		this.dY = getRandomArbitary(0.4, 1);
+
+		this.updateColor();
+
+		return this.shape;
+	},
+
+	updateColor: function() {
+		var healthq = Math.round(this.health/this.type.health * 255);
+
+		this.shape.attr({
+			fill: "rgb(255, " + (healthq) + "," + (healthq) + ")"
+		})
+	},
+
+	update: function (canvas) {
+		this.move(this.dX, this.dY);
 	},
 
 	getCollisionRectangle: function () {
 		return this.shape;
 	},
 
-	rate: 0,
-	health: 0,
-
-	dx: 1,
-	dy: -1,
-
-	enemyType: 0,
-
-	speed: TextGalactic.Settings.speed - 50	,
-
 	hit: function() {
+		this.updateColor();
+
 		this.health = this.health - 100;
 		this.redraw();
 
@@ -105,10 +119,8 @@ TextGalactic.Enemy = atom.Class(
 	},
 
 	canMoveY: function (toY) {
-		if (this.yOutOfBounds(toY)) {
+		if (toY > this.bounds.height) {
 			this.explode();
-
-			return false;
 		}
 
 		return true;
@@ -122,23 +134,9 @@ TextGalactic.Enemy = atom.Class(
 		return true;
 	},
 
-	normalize_d: function () {
-		if (this.shape.from.y > this.scene.resources.rectangle.to.y) {
-			this.kill();
-		}
-
-		if (this.shape.to.x > this.scene.resources.rectangle.to.x || this.shape.from.x < 0) {
-			this.dx = -this.dx;
-		}
-		
-		if (this.shape.from.y < -TextGalactic.Settings.font_size * 2) {
-			this.dy = -this.dy;
-		}
-	},
-
 	changeVector: function() {
-		this.dx = (getRandomInt(0, 1) == 0) ? 1: -1;
-		this.dy = getRandomArbitary(0.8, 1.3);
+		this.dX = (getRandomInt(0, 1) == 0) ? 1: -1;
+		this.dY = getRandomArbitary(0.8, 1.3);
 	},
 
 	onUpdate: function (time) {
@@ -165,19 +163,4 @@ TextGalactic.Enemy = atom.Class(
 			}
 		}
 	},
-
-	renderTo: function (ctx) {
-		var healthq = Math.round(this.health/this.enemy.health * 255);
-		ctx.fillStyle = "rgb(255, " + (healthq) + "," + (healthq) + ")";
-
-		ctx.font = "normal normal " + TextGalactic.Settings.font_size + "px courier";
-    	ctx.fillText(this.enemy.text, this.shape.from.x, this.shape.to.y);
-
-		return this.parent();
-	},
-
-	kill: function () {
-		this.destroy();
-		this.options.enemies._destroy(this);
-	}
 });

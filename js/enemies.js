@@ -1,42 +1,43 @@
-TextGalactic.Enemies = atom.Class({
-
-	Extends: TextGalactic.Collection,
-
-	initialize: function (scene, controller) {
-		this.parent(scene, controller);
-		this.storage = new Array();
-	},
+TextGalactic.Enemies =  Class.extend({
+	storage: [],
 
 	getCount: function() {
 		return this.storage.length;
 	},
 
-	_destroy: function(object) {
+/*	_destroy: function(object) {
 		for (i = 0; i < this.storage.length; i++) {
 			if (this.storage[i] == object) {
 				this.storage.splice(i, 1);
 				this.create();
 			}
 		}
-	},
+	},*/
 
-	create: function () {
-		var enemy = new TextGalactic.Enemy(this.scene, {
-			shape: new Rectangle({
-					from: new Point( 
-						getRandomInt(0, this.scene.resources.rectangle.to.x - TextGalactic.Settings.font_size ), 
-						-TextGalactic.Settings.font_size * 2 
-					),
-					size: [TextGalactic.Settings.font_stretch, TextGalactic.Settings.font_size]
-				}),
-			controller: this.controller,
-			enemyType: getRandomInt(0, 8),
-			enemies: this
+	create: function (canvas) {
+		var enemy = new TextGalactic.Enemy(canvas, {
+			x: getRandomInt(0, canvas.width),
+			y: -TextGalactic.Settings.fontSize * 2,
+			type: TextGalactic.EnemiesTypes[getRandomInt(0, 8)],
 		});
 
 		enemy.index = this.storage.push(enemy);
 
 		return enemy;
+	},
+
+	update: function () {
+		for (i = 0; i < this.storage.length; i++) {
+			if (typeof(this.storage[i]) == 'object') {
+				this.storage[i].update();
+
+				if (this.storage[i].exploded) {
+					this.storage[i].destroy();
+					delete this.storage[i];
+					this.storage.splice(i, 1);
+				}
+			}
+		}
 	},
 
 	erase: function (cell) {

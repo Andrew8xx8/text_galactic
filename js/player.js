@@ -1,4 +1,12 @@
 TextGalactic.Player = TextGalactic.Primitive.extend({
+	init: function (canvas, options) {
+		this._super(canvas, options);
+
+		this.updateColor();
+
+		return this.shape;
+	},
+	
 	getCollisionRectangle: function (radius) {
 		if (!this.collisionRectangle) {
 			this.collisionRectangle = this.shape.clone();
@@ -54,10 +62,14 @@ TextGalactic.Player = TextGalactic.Primitive.extend({
 	},
 
 	update: function (canvas) {
+
+	},
+
+	updateColor: function() {
 		var healthq = Math.round(this.health/300 * 255);
 
 		this.shape.attr({
 			fill: "rgb(255, " + (healthq) + "," + (healthq) + ")"
 		})
-	}
+	},
 });
