@@ -53,40 +53,6 @@ TextGalactic.Player = TextGalactic.Primitive.extend({
 		return this;
 	},
 
-	normalize_dx: function (dx) {
-		if (dx + this.shape.to.x > this.scene.resources.rectangle.to.x || dx + this.shape.from.x < 0) {
-			dx = 0;
-		}
-
-		return dx;
-	},
-
-	normalize_dy: function (dy) {
-		if (dy + this.shape.to.y > this.scene.resources.rectangle.to.y - TextGalactic.Settings.font_size  || dy + this.shape.from.y < 0) {
-			dy = 0;
-		}
-
-		return dy;
-	},
-	
-	onUpdate: function (time) {
-		/*var keys = this.scene.resources.keyboard;
-		var moveSpeed = (this.speed * time).toSeconds().round();
-		var dx = 0; var dy = 0;
-
-		if (this.rate > this.bulletType.rate / 2) {
-			this.options.controller.getBullets().create(
-				new Point(this.shape.from.x, this.shape.from.y),
-				this.bulletType,
-				'up'
-			);
-
-			this.rate = 0;
-		}
-
-		this.rate++;*/
-	},
-
 	update: function (canvas) {
 		var healthq = Math.round(this.health/300 * 255);
 
