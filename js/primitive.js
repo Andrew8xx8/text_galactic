@@ -47,5 +47,13 @@ TextGalactic.Primitive = Class.extend({
 
 	canMoveY: function (toY) {
 		return true;
+	},
+
+	xOutOfBounds: function (x) {
+		return (x - TextGalactic.Settings.halfStretch < 0 || x + TextGalactic.Settings.halfStretch > this.bounds.width);
+	},
+
+	yOutOfBounds: function (y) {
+		return (y - TextGalactic.Settings.halfSize < 0 || y + TextGalactic.Settings.halfSize > this.bounds.height);
 	}
 });
