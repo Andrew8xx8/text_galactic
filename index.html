@@ -1,25 +1,49 @@
-<!DOCTYPE html>
-<html style="color:white;background:#111;">
+<!doctpe html>
+<html>
 	<head>
 		<meta charset="utf-8" />
-		<title>Catch</title>
-
-		<!-- Libs -->
-		<script type="text/javascript" src="./js/lib/raphael-min.js"></script>
-
-		<script src="./js/init.js"></script>
-		<script src="./js/class.js"></script>
-		<script src="./js/primitive.js"></script>
-		<script src="./js/controller.js"></script>
-		<script src="./js/bullet.js"></script>
-		<script src="./js/player.js"></script>
-		<script src="./js/enemy.js"></script>
-		<script src="./js/enemies.js"></script>
-		<!--script src="./js/collection.js"></script>
-		<script src="./js/bullets.js"></script>
-		<script src="./js/player.js"></script-->
+		<title>gameQuery shim</title>
+		<script language="JavaScript" type="text/javascript" src="js/lib/jquery.js"></script>
+		<script language="JavaScript" type="text/javascript" src="js/lib/jquery.gamequery.js"></script>
+		<script language="JavaScript" type="text/javascript" src="js/game.js"></script>
+		<!--script>
+			$(function(){
+				// sets the div to use to display the game and its dimension
+				$("#playground").playground({width: 640, height: 320});
+				
+				// configure the loading bar
+				$.loadCallback(function(percent){
+					$("#loadBar").width(400*percent);
+					$("#loadtext").html(""+percent+"%")
+				});
+				
+				// register the start button and remove the splash screen once the game is ready to starts
+				$("#start").click(function(){
+					$.playground().startGame(function(){
+						 $("#splash").remove();
+					});
+				});
+	
+			});
+		</script-->
+		<link rel="stylesheet" type="text/css" href="css/main.css">
 	</head>
 	<body>
-		<div id="canvas_container"></div>
+		<div id ="wrap">
+			<div id="playground">
+
+			<div id="welcomeScreen">
+				<div style="position: absolute; top: 100px; width: 640px; color: white;">
+
+					<div id="loadingBar" style="position: relative; left: 50px; height: 15px; width: 0px; background: red;"></div><br />
+
+					<center><a style="cursor: pointer;" id="startbutton">Click here to start!</a></center>
+
+				</div>
+
+			</div>
+
+		</div>
+		</div>
 	</body>
-</html>
+</html>	

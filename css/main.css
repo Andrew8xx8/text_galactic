@@ -1,0 +1,22 @@
+body {
+	background: #000;
+	color: #fff;
+}
+
+#start {
+	cursor: pointer;
+}
+
+#wrap {
+	width:640px;
+	height:320px;
+	border: 1px solid #ccc;
+	margin: 0 auto;
+}
+#welcomeScreen {
+	width: 640px; 
+	height: 320px; 
+	position: absolute; 
+	z-index: 100; 
+	font-family: verdana, sans-serif;
+}
