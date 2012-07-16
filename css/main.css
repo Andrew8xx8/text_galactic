@@ -20,3 +20,23 @@ body {
 	z-index: 100; 
 	font-family: verdana, sans-serif;
 }
+
+.enemy {
+	border: 1px solid #fff;
+	border-radius: 10px;
+}
+
+#player {
+	border: 1px solid #fff;
+	border-radius: 10px;
+}
+
+.playerMissiles {
+	border: 1px solid #fff;
+	border-radius: 10px;	
+}
+
+.enemiesMissiles {
+	border: 1px solid #fff;
+	border-radius: 10px;
+}

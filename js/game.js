@@ -1,6 +1,6 @@
 // Global constants:
 var PLAYGROUND_WIDTH	= 640;
-var PLAYGROUND_HEIGHT	= 250;
+var PLAYGROUND_HEIGHT	= 320;
 var REFRESH_RATE		= 15;
 
 var GRACE		= 2000;
@@ -214,7 +214,7 @@ $(function(){
 						.addSprite("background6", {animation: background6, width: PLAYGROUND_WIDTH, height: PLAYGROUND_HEIGHT, posx: PLAYGROUND_WIDTH})
 					.end()
 					.addGroup("actors", {width: PLAYGROUND_WIDTH, height: PLAYGROUND_HEIGHT})
-						.addGroup("player", {posx: PLAYGROUND_WIDTH/2, posy: PLAYGROUND_HEIGHT/2, width: 100, height: 26})
+						.addGroup("player", {posx: PLAYGROUND_WIDTH/2, posy: PLAYGROUND_HEIGHT - 30, width: 16, height: 26})
 							.addSprite("playerBoostUp", {posx:37, posy: 15, width: 14, height: 18})
 							.addSprite("playerBody",{animation: playerAnimation["idle"], posx: 0, posy: 0, width: 100, height: 26})
 							.addSprite("playerBooster", {animation:playerAnimation["boost"], posx:-32, posy: 5, width: 36, height: 14})
@@ -301,8 +301,8 @@ $(function(){
 			//Update the movement of the enemies
 			$(".enemy").each(function(){
 					this.enemy.update($("#player"));
-					var posx = $(this).x();
-					if((posx + 100) < 0){
+					var posy = $(this).y();
+					if(posy > PLAYGROUND_HEIGHT){
 						$(this).remove();
 						return;
 					}
@@ -339,12 +339,12 @@ $(function(){
 			
 			//Update the movement of the missiles
 			$(".playerMissiles").each(function(){
-					var posx = $(this).x();
-					if(posx > PLAYGROUND_WIDTH){
+					var posY = $(this).y();
+					if(posY < 0){
 						$(this).remove();
 						return;
 					}
-					$(this).x(MISSILE_SPEED, true);
+					$(this).y(-MISSILE_SPEED, true);
 					//Test for collisions
 					var collided = $(this).collision(".group,.enemy");
 					if(collided.length > 0){
@@ -457,7 +457,7 @@ $(function(){
 					var playerposx = $("#player").x();
 					var playerposy = $("#player").y();
 					var name = "playerMissle_"+Math.ceil(Math.random()*1000);
-					$("#playerMissileLayer").addSprite(name,{animation: missile["player"], posx: playerposx + 90, posy: playerposy + 14, width: 36,height: 10});
+					$("#playerMissileLayer").addSprite(name,{animation: missile["player"], posx: playerposx + 6, posy: playerposy, width: 5,height: 5});
 					$("#"+name).addClass("playerMissiles")
 					break;
 				case 65: //this is left! (a)
